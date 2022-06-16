@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+    rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/canvas.css'%}">
+    <!-- <link rel="stylesheet" href="canvas.css"> -->
+
+
+</head>
+<body>
+
+    
+    <div id="divCanvas">
+        <canvas id="canvas" width="800" height="400"  style="border:8px solid black"></canvas>
+    </div>
+
+   
+
+    <!-- navBar -->
+
+    <nav id="navBar" class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <!-- Archivo -->
+                <div class="dropdown">
+                    <button class="nav-link active btn dropdown-toggle"
+                     type="button" id="dd1" data-bs-toggle="dropdown" >Archivo</button>
+                     <div class="dropdown-menu">
+
+                        <!-- <button class="nav-link active">Abrir</button> -->
+                        <div id="cont">
+                            <button id="importJson" style="background: rgb(63, 13, 247) ; color: white;"disabled>Abrir XML</button>
+                            <input type="file"  id="fileXml" name="file" accept=".XML">
+                        </div>
+
+
+                        <button id="btnCerrar" class="nav-link active">Cerrar</button>
+                        <form id="formularioCanvas" action="/guCanvas/" method="POST">{% csrf_token %}
+                          <button id="guardar" onclick='jsonxml()' class="nav-link active">Guardar</button>
+                        </form>
+
+                        <button class="nav-link active btn " type="button" id="guardarComo" 
+                         data-bs-toggle="modal" data-bs-target="#guardarComoModal">Guardar como</button>
+                        
+                     </div>
+                </div>
+                <!--nuevo grafo (aleatorio y personalizado) --> 
+
+                <div class="dropdown">
+                    <button class="nav-link active btn dropdown-toggle"
+                     type="button" id="dd2" data-bs-toggle="dropdown" >Nuevo grafo</button>
+                     <div class="dropdown-menu">
+                        <button id="personalizado" >PERSONALIZADO</button>
+                        <button id="aleatorio" >ALEATORIO</button>
+                     </div>
+                </div>
+
+                <!--Exportar  -->
+
+                <div class="dropdown">
+                    <button class="nav-link active btn dropdown-toggle"
+                     type="button" id="dd3" data-bs-toggle="dropdown" >Exportar</button>
+                     <div class="dropdown-menu">
+                        <button id="ExportExcel" style="background:rgb(18, 228, 53);">XLSX</button>
+                        <button id="ExportPng" style="background:rgb(175, 70, 70);">PNG</button>
+                        <button id="ExportJpg" style="background:rgb(175, 70, 70);">JPG</button>
+                        <button id="ExportPdf" style="background:rgb(175, 70, 70);">PDF</button>
+                        <button id="exportJson" onclick="exportJson()" style="background: black ; color: white;"  >JSON</button>
+                     </div>
+                </div>
+                <!--Importar  -->
+                <div class="dropdown">
+                    <button class="nav-link active btn dropdown-toggle"
+                     type="button" id="dd4" data-bs-toggle="dropdown" >Importar</button>
+                     <div class="dropdown-menu">
+                        <div id="cont">
+                            <button id="importJson" style="background: black ; color: white;"disabled>JSON/XML</button>
+                            <input type="file"  id="fileUpload" name="file" accept=".JSON,.XML" />
+                        </div>
+                     </div>
+                </div>
+
+                <!-- Analizar -->
+                <div class="dropdown">
+                    <button class="nav-link active btn dropdown-toggle"
+                     type="button" id="dd5" data-bs-toggle="dropdown" >Analizar</button>
+                     <div class="dropdown-menu">
+                        <button >Algoritmo 1</button>
+                        <button >Algoritmo 2</button>
+                        <button >Algoritmo 3</button>
+                        <button >Algoritmo 4</button>
+                     </div>
+                </div>
+
+                 <!-- Herramienta -->
+                 <div class="dropdown">
+                    <button class="nav-link active btn dropdown-toggle"
+                     type="button" id="dd6" data-bs-toggle="dropdown" >Herramienta</button>
+                     <div id="toDjango" class="dropdown-menu">
+                      <!-- <form id="formularioCanvas" action="/guCanvas/" method="POST">{% csrf_token %} -->
+                        <button id="circles">Ejecución</button>
+                      <!-- </form> -->
+                        
+                     </div>
+                </div>
+
+                 <!-- Aplicación -->
+                 <div class="dropdown">
+                    <button class="nav-link active btn dropdown-toggle"
+                     type="button" id="dd7" data-bs-toggle="dropdown" >Aplicación</button>
+                     <div class="dropdown-menu">
+                        <button >Aplicación 1</button>
+                        <button >Aplicación 2</button>
+
+                     </div>
+                </div>
+
+                 <!-- Ayuda -->
+                 <div class="dropdown">
+                    <button class="nav-link active btn dropdown-toggle"
+                     type="button" id="dd8" data-bs-toggle="dropdown" >Ayuda</button>
+                     <div class="dropdown-menu">
+                        <button >Ayuda</button>
+                        <button >Acerca de grafos</button>
+
+                     </div>
+                </div>
+
+                
+            </div>
+          </div>
+        </div>
+      </nav>
+
+ 
+
+    <!-- Buttons -->>
+    <div id="buttons">
+        <button id="button" class="blue"  value=1 >Agregar vértice</button>
+        <button id="unir"  value=0 >Conectar vértices</button>
+       
+    </div>
+
+    <button type="button" id="matriz_a" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Matriz de adyacencia</button>
+   
+    
+    <div class="modal" id="exampleModal">
+      <div class="modal-dialog">
+
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Matriz de adyacencia</h5>
+            <h6 class="modal-content" id="exampleModalLabel">Configura los pesos de las aristas</h6>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+           
+                <table id="tblData">
+                    <thead id="head">
+                        <th>h</th>
+                    </thead>
+                    <tbody id="body">
+                        
+                    </tbody>
+                </table>
+            
+          </div>
+          <div class="modal-footer">
+           
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" id="guardarMatriz" class="btn" data-bs-dismiss="modal">Guardar cambios</button>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="explicacion">
+        <h7>Clickea en el área de trabajo para crear vertices</h7>
+    </div>
+
+    <div id="contextMenu" class="context-menu" 
+        style="display: none">
+        <ul>
+            <li><button id="botonElim">Eliminar vertice</button></li>
+            <li><button id="botonEdit">Renombrar vertice</button></li>
+    
+        </ul>
+    </div>
+
+    <div id="contextMenuLine" class="context-menu" 
+        style="display: none">
+        <ul>
+            <li><button id="botonElimArist">Eliminar arista</button></li>
+            <li><button id="botonEditArist">Editar peso</button></li>
+    
+        </ul>
+    </div>
+   
+    
+    <div class="modal" id="guardarComoModal">
+      <div class="modal-dialog">
+
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Nombre del archivo</h5>
+          </div>
+          <div class="modal-body">
+           
+            <form>
+                <div class="mb-3">
+                  <label for="nombre-archivo" class="col-form-label">Escribe el nombre del archivo:</label>
+                  <input type="text" class="form-control" id="nombre-archivo">
+                </div>
+              </form> 
+          </div>
+          <div class="modal-footer">
+           
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" id="guardarComoSubmit" class="btn" data-bs-dismiss="modal">Guardar archivo</button>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+        canvas.oncontextmenu = rightClick;
+  
+        function rightClick(clickEvent) {
+            clickEvent.preventDefault();
+            // return false;
+        }
+    </script>
+
+
+    
+   <script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+   <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+
+   <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+    crossorigin="anonymous"></script>
+
+    <script src="{% static 'js/canvasPrueba.js' %}"></script>
+   <!-- <script src="canvasPrueba.js"></script> -->
+   
+</body>
+</html>
