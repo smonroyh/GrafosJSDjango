@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 
-from grafo.views import plantillaCanvas, guCanvas
+from grafo.views import plantillaCanvas, guCanvas , mostrarGraphsBD
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +25,6 @@ urlpatterns = [
     
 
     path('guCanvas/',guCanvas),
+
+    path('mostrarGraphsBD/',mostrarGraphsBD)
 ]

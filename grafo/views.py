@@ -46,18 +46,22 @@ def plantillaCanvas(request):
   
 #############################################
 ##prueba integrando canvas
-
+arrayGraphsBd=[]
 def guCanvas(request):
     circlesJson=request.POST['textCircles']
     circlesJson=json.loads(circlesJson)
 
-    print(circlesJson)
-    # print(circlesJson)
-
     ##inserta un documento
     vertices.insert_one(circlesJson)
-    
 
     return redirect('/')
+    # return render(request,'canvas.html',{"graph":lista_de_graphsEnBD})
     
+
+def mostrarGraphsBD(request):
+    lista_de_graphsEnBD=list(vertices.find())
+
+
+    # print("la lista es :",lista_de_graphsEnBD)
+    return render(request,'canvas.html',{"graph":lista_de_graphsEnBD})
     

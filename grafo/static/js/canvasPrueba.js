@@ -1365,6 +1365,13 @@ const guardarBD=()=>{
     formularioCanvas.appendChild(inp);
 }
 
+btnGraphsBD=document.getElementById("btnGraphsBD");
+
+contenedorBD=document.getElementById("contenedorBD");
+
+// btnGraphsBD.addEventListener('click',(e)=>{
+//     contenedorBD.innerHTML="";
+// })
 
 
 
