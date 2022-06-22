@@ -1127,7 +1127,7 @@ function exportToJsonFile(jsonData,n) {
 }
 
 var json={};
-const exportJson=(n)=>{
+const exportJson=(n,des)=>{
     // var json={};
     json={};
     json.graph=[];
@@ -1155,7 +1155,13 @@ const exportJson=(n)=>{
         })
 
     }
-    exportToJsonFile(json,n)
+    if(des){
+        exportToJsonFile(json,n)
+    }
+    else{
+        return(json);
+    }
+    
 
 }
     
@@ -1325,7 +1331,7 @@ const exportXml=(n)=>{
     
 
 const jsonxml=(n)=>{
-    exportJson(n);
+    exportJson(n,true);
     exportXml(n);
     guardarBD();
 }
@@ -1374,6 +1380,22 @@ contenedorBD=document.getElementById("contenedorBD");
 // })
 
 
+//pasando json a python para el algoritmo Queryanne 
+btnPassJsonJsToPy=document.getElementById("passJsonJsToPy");
+formularioQ=document.getElementById("formularioQ");
+
+btnPassJsonJsToPy.addEventListener('click',(e)=>{
+    js=exportJson("",false);
+    console.log(js);
+
+    var inp=document.createElement("input");
+    inp.type="hidden";
+    inp.value=JSON.stringify(js);
+    inp.id="textCircles";
+    inp.name="textCircles";
+    console.dir(inp);
+    formularioQ.appendChild(inp);
+})
 
 
 

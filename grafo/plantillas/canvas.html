@@ -95,10 +95,15 @@
                     <button class="nav-link active btn dropdown-toggle"
                      type="button" id="dd5" data-bs-toggle="dropdown" >Analizar</button>
                      <div class="dropdown-menu">
-                        <button >Algoritmo 1</button>
-                        <button >Algoritmo 2</button>
-                        <button >Algoritmo 3</button>
-                        <button >Algoritmo 4</button>
+                      <form id="formularioQ" action="/Queayranne/" method="POST">{% csrf_token %}
+                        <button id="passJsonJsToPy"  class="nav-link active">Queayranne</button>
+                      </form>
+
+                        <!-- <a href="Queayranne/" class="btn">Queayranne</a> -->
+                        <!-- <button >Queayranne</button> -->
+                        <a href="#" class="btn">Algoritmo 1</a>
+                        <a href="#" class="btn">Algoritmo 2</a>
+                        <a href="#" class="btn">Algoritmo 3</a>
                      </div>
                 </div>
 
@@ -140,8 +145,9 @@
                 <!-- <form id="form" action="/mostrarGrahsBD/" method="POST">{% csrf_token %}
                 <button type="button" id="btnGraphsBD" class="nav-link btn active" data-bs-toggle="modal" data-bs-target="#ModalBD">Ver grafos en BD</button>
               </form> -->
-                
-                <a href="{% url 'mostrarGraphsBD/' %}" id="btnGraphsBD" class="btn active nav-link" data-bs-toggle="modal" data-bs-target="#ModalBD">Ver grafos en BD</a>
+           
+
+                <a href="mostrarGraphsBD/" id="btnGraphsBD" class="btn active nav-link" data-bs-toggle="modal" data-bs-target="#ModalBD">Ver grafos en BD</a>
 
                 <div class="modal" id="ModalBD">
                   <div class="modal-dialog">
@@ -149,7 +155,7 @@
                     <div class="modal-content">
             
                       <div class="modal-header">
-                        <h5 class="modal-title" id="ModalBDLabel">Matriz de adyacencia</h5>
+                        <h5 class="modal-title" id="ModalBDLabel">Grafos en BD</h5>
                         
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
