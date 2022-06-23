@@ -102,6 +102,7 @@ def find_partitions(V,k):
     k_subs = uniq_subsets(k_subs)
 
     return k_subs
+
     
 def Queayranne(request):
     circlesJson=request.POST['textCircles']
@@ -130,14 +131,43 @@ def Queayranne(request):
         for j in listValues[i]:
             lis.append(list(j))
         listRes.append(lis)
-    
+    menor=99999999999
     for i in range(len(listRes)):
+        acum=0
         print(listRes[i])
         for j in range(len(listRes[i][0])):
             for h in range(len(listRes[i][1])):
+
                 print(listRes[i][0][j],listRes[i][1][h])
-        
-    print(listRes)
-    # print(listValues)
-  
+
+                arista=retornaAristasDeVertx(circlesJson,listRes[i][0][j],listRes[i][1][h])
+                if arista:
+            
+                    acum+=arista["peso"]
+        if acum<menor:
+            menor=acum
+        print(acum)
+    print("el menor finalmente es :",menor)
+
     return redirect('/')
+
+def retornaAristasDeVertx(json,id1,id2):
+   
+    for i in json["graph"][0]["data"]:
+        q=0
+        if(i["id"]==id1 ):
+            while q < len(i["linkedTo"]):
+                if(i["linkedTo"][q]["nodeId"]==id2):
+                    return i["linkedTo"][q]
+                q+=1
+    
+    for i in json["graph"][0]["data"]:
+        q=0
+        if(i["id"]==id2 ):
+            while q < len(i["linkedTo"]):
+                if(i["linkedTo"][q]["nodeId"]==id1):
+                    return i["linkedTo"][q]
+                q+=1
+    
+    
+  
