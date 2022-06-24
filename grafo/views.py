@@ -132,7 +132,11 @@ def Queayranne(request):
             lis.append(list(j))
         listRes.append(lis)
     menor=99999999999
+    menorAristas=[]
+
     for i in range(len(listRes)):
+        ar=[]
+        aristas=[]
         acum=0
         print(listRes[i])
         for j in range(len(listRes[i][0])):
@@ -142,14 +146,25 @@ def Queayranne(request):
 
                 arista=retornaAristasDeVertx(circlesJson,listRes[i][0][j],listRes[i][1][h])
                 if arista:
-            
+                    # print(arista)
+                    aristas.append(arista)
                     acum+=arista["peso"]
+                    ar.append(listRes[i][0][j])
+                    ar.append(listRes[i][1][h])
         if acum<menor:
+            menorAristas=[]
+            menorAristas.append(ar)
+            menorAristas.append(aristas)
             menor=acum
         print(acum)
     print("el menor finalmente es :",menor)
+    print(menorAristas)
+    dictMenorAristas={
+        "mAristas":menorAristas
+    }
 
-    return redirect('/')
+    return render(request,"canvasQ.html",{"j":dumps(circlesJson),"menorAristas":dumps(dictMenorAristas) })
+   
 
 def retornaAristasDeVertx(json,id1,id2):
    

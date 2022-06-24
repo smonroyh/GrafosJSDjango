@@ -1395,6 +1395,9 @@ btnPassJsonJsToPy.addEventListener('click',(e)=>{
     inp.name="textCircles";
     console.dir(inp);
     formularioQ.appendChild(inp);
+
+    console.log(data)
+    
 })
 
 
