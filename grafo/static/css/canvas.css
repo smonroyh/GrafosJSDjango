@@ -109,3 +109,14 @@
     bottom:400px;
     left:15px;
 }
+
+#btnsGroupOptions{
+    position: relative;
+    height: 200px;
+    width: 200px;
+    background-color:darkgrey;
+    border-radius: 10px;
+    bottom:400px;
+    left:900px;
+
+}

@@ -96,12 +96,16 @@
                      type="button" id="dd5" data-bs-toggle="dropdown" >Analizar</button>
                      <div class="dropdown-menu">
                       <form id="formularioQ" action="/Queayranne/" method="POST">{% csrf_token %}
-                        <button id="passJsonJsToPy"  class="nav-link active">Queayranne</button>
+                        <button id="passJsonJsToPy"   class="nav-link active">Queayranne</button>
                       </form>
 
                         <!-- <a href="Queayranne/" class="btn">Queayranne</a> -->
                         <!-- <button >Queayranne</button> -->
-                        <a href="#" class="btn">Algoritmo 1</a>
+
+                        
+                        <button id="btnPartirDosUser" >Partir_en_dos_por_usuario</button>
+
+                        <!-- <a href="#" class="btn">Partir_en_dos_por_usuario</a> -->
                         <a href="#" class="btn">Algoritmo 2</a>
                         <a href="#" class="btn">Algoritmo 3</a>
                      </div>
@@ -183,10 +187,6 @@
           </div>
         </div>
       </nav>
-
-      
-
-      
  
 
     <!-- Buttons -->>
@@ -279,6 +279,19 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div id="btnsGroupOptions">
+      <div id="parteA">
+
+      </div>
+      <div id="parteB">
+        
+      </div>
+      <form id="formularioPartirUser" action="/PartirUser/" method="POST">{% csrf_token %}
+        <button id="btnPassJsonJsToPy2"  class="btn btn-success " style="display: none">Hacer</button>
+      </form>
+      <!-- <button id="btnhacer" class="btn btn-success ">hacer</button> -->
     </div>
 
     <script type="text/javascript">

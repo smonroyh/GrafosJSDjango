@@ -1,3 +1,5 @@
+
+
 const canvas=document.getElementById('canvasQ');
 const ctx=canvas.getContext('2d');
 
@@ -207,19 +209,19 @@ const returnArista=(id1,id2)=>{
 
 const ret=()=>{
     console.log("o");
-    miModal=document.getElementById('ModalBDs');
+    miModal=document.getElementById('modalPartirUser');
     miModal.style.display = "block";
-    graficarJSON(data);
+    graficarJSON(data2);
   
-    console.log(menorAristas);
+    console.log(aristasQuitar);
     console.log(circles);
     console.log(lines);
     // console.log(returnArista(1,3));
-    for(let i = 0 ;i<menorAristas.mAristas[0].length;i+=2){
+    for(let i = 0 ;i<aristasQuitar.mAristas[0].length;i+=2){
         // console.log(menorAristas.mAristas[0][i],menorAristas.mAristas[0][i+1]);
         //returnArista(menorAristas.mAristas[0][i],menorAristas.mAristas[0][i+1])
-        console.log(returnArista(menorAristas.mAristas[0][i],menorAristas.mAristas[0][i+1]));
-        returnArista(menorAristas.mAristas[0][i],menorAristas.mAristas[0][i+1]).draw2();
+        console.log(returnArista(aristasQuitar.mAristas[0][i],aristasQuitar.mAristas[0][i+1]));
+        returnArista(aristasQuitar.mAristas[0][i],aristasQuitar.mAristas[0][i+1]).draw2();
 
     }
 }

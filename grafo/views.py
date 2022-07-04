@@ -155,10 +155,11 @@ def Queayranne(request):
             menorAristas=[]
             menorAristas.append(ar)
             menorAristas.append(aristas)
+    
             menor=acum
         print(acum)
-    print("el menor finalmente es :",menor)
-    print(menorAristas)
+    # print("el menor finalmente es :",menor)
+    print("el menor",menorAristas)
     dictMenorAristas={
         "mAristas":menorAristas
     }
@@ -184,5 +185,47 @@ def retornaAristasDeVertx(json,id1,id2):
                     return i["linkedTo"][q]
                 q+=1
     
+def volverPrincipal(request):
+    print("Queayranne               ss          enviar")
+    return redirect('/')
+
+AristasQuitar=[]
+arNodeQ=[]
+aristasList=[]
+def PartirUser(request):
+    AristasQuitar=[]
+    circlesJson=request.POST['textCircles']
+    circlesJson=json.loads(circlesJson)
+    ArtsA=request.POST['textVecGroupA']
+    ArtsA=json.loads(ArtsA)
+    ArtsB=request.POST['textVecGroupB']
+    ArtsB=json.loads(ArtsB)
     
-  
+    
+    print(circlesJson)
+    print("\n")
+
+    listaPartition=[]
+    
+    for i in range(len(circlesJson["graph"][0]["data"])):
+        print(circlesJson["graph"][0]["data"][i]["id"])
+        listaPartition.append(circlesJson["graph"][0]["data"][i]["id"])
+    arNodeQ=[]
+    for i in range(len(ArtsA["elm"])):
+       
+        for j in range(len(ArtsB["elm"])):
+            # print("A->",ArtsA["elm"][i]["node"])
+            # print("B->",ArtsB["elm"][j]["node"])
+            if(retornaAristasDeVertx(circlesJson,ArtsA["elm"][i]["node"],ArtsB["elm"][j]["node"])):
+                arNodeQ.append(ArtsA["elm"][i]["node"])
+                arNodeQ.append(ArtsB["elm"][j]["node"])
+                aristasList.append(retornaAristasDeVertx(circlesJson,ArtsA["elm"][i]["node"],ArtsB["elm"][j]["node"]))
+                
+            # print(retornaAristasDeVertx(circlesJson,ArtsA["elm"][i]["node"],ArtsB["elm"][j]["node"]))
+    AristasQuitar.append(arNodeQ)
+    AristasQuitar.append(aristasList)
+    print(AristasQuitar)
+    dictAristasQuitar={
+        "mAristas":AristasQuitar
+    }
+    return render(request,"canvasPartirUser.html",{"q":dumps(circlesJson),"Arts":dumps(dictAristasQuitar)})

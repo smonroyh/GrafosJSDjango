@@ -82,6 +82,8 @@ class Line{
 
 var circles=[]
 var lines = []
+
+partirDosUser=false;
   
 const button = document.getElementById('button');
 
@@ -220,7 +222,10 @@ var peso=0;
 //         return circles[circles.length-1].id;
 //     }
 // }
-
+vecGroupA=[];
+vecGroupB=[];
+vecGroupAnames=[];
+vecGroupBnames=[];
 var rect = canvas.getBoundingClientRect();
 canvas.addEventListener('click', (e)=>{
 
@@ -295,8 +300,68 @@ canvas.addEventListener('click', (e)=>{
     else{
 
         circles.forEach((circle) =>{
-            if(isIntersect(pos,circle)){
-                console.log(circle.id);
+            // console.log(partirDosUser);
+            if(isIntersect(pos,circle) & (partirDosUser)){
+                console.log(parteA.children);
+                console.log(parteB.children);
+
+                if(parteA.children.length>1 & parteB.children.length<=1){
+                    console.log("Entra al primero");
+                    // parteA.removeChild(parteA.lastChild); 
+                    parteA.removeChild(parteA.children[1]);
+                }
+                else if(parteB.children.length>1 & parteA.children.length<=1 ){
+                    console.log("Entra al segundo");
+                    // parteB.removeChild(parteA.lastChild); 
+                    parteB.removeChild(parteB.children[1]);
+                }
+                else if(parteA.children.length>1 & parteB.children.length>1){
+                    console.log("Entra al tercero");
+                    // parteA.removeChild(parteA.lastChild); 
+                    // parteB.removeChild(parteA.lastChild); 
+                    parteA.removeChild(parteA.children[1]);
+                    parteB.removeChild(parteB.children[1]);
+                }
+                const textParteA=document.createElement("div");
+                const textParteB=document.createElement("div");
+                if(bandGroupA){
+                    
+                    if(!vecGroupA.includes(circle.id)){
+                        if(!vecGroupB.includes(circle.id)){
+                            vecGroupA.push(circle.id);
+                            vecGroupAnames.push(circle.name);
+                        }
+                        else{
+                            vecGroupA.push(circle.id);
+                            vecGroupAnames.push(circle.name);
+                            vecGroupB.splice(vecGroupB.indexOf(circle.id),1);
+                            vecGroupBnames.splice(vecGroupBnames.indexOf(circle.name),1);
+                        }
+                    }
+                }
+                if(bandGroupB){
+
+                    if(!vecGroupB.includes(circle.id)){
+                        if(!vecGroupA.includes(circle.id)){
+                            vecGroupB.push(circle.id);
+                            vecGroupBnames.push(circle.name);
+                        }
+                        else{
+                            vecGroupB.push(circle.id);
+                            vecGroupBnames.push(circle.name);
+                            vecGroupA.splice(vecGroupA.indexOf(circle.id),1);
+                            vecGroupAnames.splice(vecGroupAnames.indexOf(circle.name),1);
+                        }
+                        
+                    }
+                }
+                textParteA.textContent=vecGroupAnames;
+                textParteB.textContent=vecGroupBnames;
+                parteA.appendChild(textParteA);
+                parteB.appendChild(textParteB);
+                console.log(vecGroupA,vecGroupB);
+                console.log(vecGroupAnames,vecGroupBnames);
+                // console.dir(parteA,parteB);
             }
         })
         
@@ -1396,6 +1461,106 @@ btnPassJsonJsToPy.addEventListener('click',(e)=>{
     console.dir(inp);
     formularioQ.appendChild(inp);
 
+    console.log(data)
+    
+})
+
+btnPartirDosUser=document.getElementById("btnPartirDosUser");
+btnsGroupOptions=document.getElementById("btnsGroupOptions");
+
+parteA=document.getElementById("parteA");
+parteB=document.getElementById("parteB");
+
+btnPartirDosUser.addEventListener("click",(e)=>{
+    if(!partirDosUser){
+        document.getElementById("btnPassJsonJsToPy2").style.display="block";
+        partirDosUser=true;
+
+        const groupA=document.createElement("button");
+        groupA.textContent = "Grupo A";
+        groupA.classList.add("btn");
+        parteA.appendChild(groupA);
+        bandGroupA=false;
+
+        const groupB=document.createElement("button");
+        groupB.textContent = "Grupo B";
+        groupB.classList.add("btn");
+        parteB.appendChild(groupB);
+        bandGroupB=false;
+
+        groupA.addEventListener("click",(e)=>{
+
+            bandGroupA=true;
+            bandGroupB=false;
+            
+            // console.log(bandGroupA,bandGroupB);
+            
+        });
+        groupB.addEventListener("click",(e)=>{
+            bandGroupA=false;
+            bandGroupB=true;
+        
+            // console.log(bandGroupA,bandGroupB);
+        });
+        
+    }
+    else{
+        partirDosUser=false;
+        // btnsGroupOptions.innerHTML="";
+        parteA.innerHTML="";
+        parteB.innerHTML="";
+        vecGroupA=[];
+        vecGroupA=[];
+        vecGroupAnames=[];
+        vecGroupBnames=[];
+        document.getElementById("btnPassJsonJsToPy2").style.display="none";
+    }
+
+})
+
+btnPassJsonJsToPy2.addEventListener('click',(e)=>{
+    js=exportJson("",false);
+    console.log(js);
+    var inpGroupA=document.createElement("input");
+    inpGroupA.type="hidden";
+    inpGroupA.value=vecGroupA;
+    inpGroupA.id="textVecGroupA";
+    inpGroupA.name="textVecGroupA";
+
+    jsonGroupA={}
+    jsonGroupA.elm=[]
+    for(i=0;i<vecGroupA.length;i++){
+        jsonGroupA.elm.push({
+            node:vecGroupA[i]
+        })
+    }
+    inpGroupA.value=JSON.stringify(jsonGroupA);
+    
+    
+    var inpGroupB=document.createElement("input");
+    inpGroupB.type="hidden";
+    inpGroupB.value=vecGroupB;
+    inpGroupB.id="textVecGroupB";
+    inpGroupB.name="textVecGroupB";
+
+    jsonGroupB={}
+    jsonGroupB.elm=[]
+    for(i=0;i<vecGroupB.length;i++){
+        jsonGroupB.elm.push({
+            node:vecGroupB[i]
+        })
+    }
+    inpGroupB.value=JSON.stringify(jsonGroupB);
+
+    var inp=document.createElement("input");
+    inp.type="hidden";
+    inp.value=JSON.stringify(js);
+    inp.id="textCircles";
+    inp.name="textCircles";
+    console.dir(inp);
+    formularioPartirUser.appendChild(inp);
+    formularioPartirUser.appendChild(inpGroupA);
+    formularioPartirUser.appendChild(inpGroupB);
     console.log(data)
     
 })

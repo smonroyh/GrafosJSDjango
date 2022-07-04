@@ -19,7 +19,7 @@
 <body>
 
 
-    <div class="modal " id="ModalBDs">
+    <div class="modal " id="modalPartirUser">
         <div class="modal-dialog modal-fullscreen">
   
           <div class="modal-content">
@@ -56,10 +56,7 @@
     
 
     <!-- pasar json del grafo y las aristas con menos perdida -->
-    <script>
-      var data= JSON.parse("{{j|escapejs}}")
-      var menorAristas= JSON.parse("{{menorAristas|escapejs}}")
-    </script>
+
     <script>
       var data2= JSON.parse("{{q|escapejs}}")
       var aristasQuitar= JSON.parse("{{Arts|escapejs}}")
@@ -80,7 +77,7 @@
 
     
 
-    <script src="{% static 'js/canvasQ.js' %}"></script>
+    <script src="{% static 'js/canvasPartirUser.js' %}"></script>
    <!-- <script src="canvasPrueba.js"></script> -->
    
 </body>
