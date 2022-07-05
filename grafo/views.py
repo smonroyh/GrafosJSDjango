@@ -226,6 +226,8 @@ def PartirUser(request):
     AristasQuitar.append(aristasList)
     print(AristasQuitar)
     dictAristasQuitar={
-        "mAristas":AristasQuitar
+        "mAristas":AristasQuitar,
+        "aristGrupA":ArtsA,
+        "aristGrupB":ArtsB
     }
     return render(request,"canvasPartirUser.html",{"q":dumps(circlesJson),"Arts":dumps(dictAristasQuitar)})

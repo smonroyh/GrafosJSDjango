@@ -1,4 +1,7 @@
+// console.log(aristasQuitar["aristGrupA"]["elm"]);
+// console.log(aristasQuitar["aristGrupB"]["elm"]);
 
+// console.log(aristasQuitar.ArtsB)
 
 const canvas=document.getElementById('canvasQ');
 const ctx=canvas.getContext('2d');
@@ -154,11 +157,11 @@ const sobrePuesto =(array,posi)=>{
 }
 
 const graficarJSON=(jsonImp)=>{
-    console.log(jsonImp)
+    // console.log(jsonImp)
     
     cantidadVertices=jsonImp.graph[0].data.length
 
-    console.log(cantidadVertices);
+    // console.log(cantidadVertices);
     circles=[];
     lines=[];
     VecPosiciones=[];
@@ -208,22 +211,84 @@ const returnArista=(id1,id2)=>{
 }
 
 const ret=()=>{
-    console.log("o");
+    // console.log("o");
     miModal=document.getElementById('modalPartirUser');
     miModal.style.display = "block";
     graficarJSON(data2);
   
-    console.log(aristasQuitar);
-    console.log(circles);
-    console.log(lines);
+    // console.log(aristasQuitar);
+    // console.log(circles);
+    // console.log(lines);
     // console.log(returnArista(1,3));
     for(let i = 0 ;i<aristasQuitar.mAristas[0].length;i+=2){
         // console.log(menorAristas.mAristas[0][i],menorAristas.mAristas[0][i+1]);
         //returnArista(menorAristas.mAristas[0][i],menorAristas.mAristas[0][i+1])
-        console.log(returnArista(aristasQuitar.mAristas[0][i],aristasQuitar.mAristas[0][i+1]));
+        // console.log(returnArista(aristasQuitar.mAristas[0][i],aristasQuitar.mAristas[0][i+1]));
         returnArista(aristasQuitar.mAristas[0][i],aristasQuitar.mAristas[0][i+1]).draw2();
 
     }
+
+    // if(parteA.children.length>1 & parteB.children.length<=1){
+    //     console.log("Entra al primero");
+    //     // parteA.removeChild(parteA.lastChild);
+    //     parteA.removeChild(parteA.children[0]); 
+    //     parteA.removeChild(parteA.children[1]);
+    // }
+    // else if(parteB.children.length>1 & parteA.children.length<=1 ){
+    //     console.log("Entra al segundo");
+       
+    //     parteB.removeChild(parteB.children[1]);
+    // }
+    // else 
+    if(parteA.children.length>1 & parteB.children.length>1){
+        console.log("Entra al tercero");
+
+        for(let i=0;i<parteA.children.length;i++) {
+            parteA.removeChild(parteA.children[i]);
+            parteB.removeChild(parteB.children[i]);
+        }
+        
+        // parteA.removeChild(parteA.children[0]);
+        // parteB.removeChild(parteB.children[0]);
+        // parteA.removeChild(parteA.children[1]);
+        // parteB.removeChild(parteB.children[1]);
+    }
+
+    parteA=document.getElementById("parteA");
+    btnParteA=document.createElement("button");
+    btnParteA.textContent = "GRUPO A";
+    btnParteA.classList.add("btn");
+    parteA.appendChild(btnParteA);
+
+    parteB=document.getElementById("parteB");
+    btnParteB=document.createElement("button");
+    btnParteB.textContent = "GRUPO B";
+    btnParteB.classList.add("btn");
+    parteB.appendChild(btnParteB);
+
+    textA=[]
+    for(let i=0; i<aristasQuitar["aristGrupA"]["elm"].length; i++){
+        
+        textA.push(aristasQuitar["aristGrupA"]["elm"][i]["node"])
+        
+    }
+
+    textB=[]
+    for(let i=0; i<aristasQuitar["aristGrupB"]["elm"].length; i++){
+        
+        textB.push(aristasQuitar["aristGrupB"]["elm"][i]["node"])
+        
+    }
+    
+    divPartA=document.createElement("div");
+    divPartA.textContent=textA;
+    parteA.appendChild(divPartA);
+
+    
+
+    divPartB=document.createElement("div");
+    divPartB.textContent=textB;
+    parteB.appendChild(divPartB);
 }
 
 window.addEventListener('load',(e)=>{
